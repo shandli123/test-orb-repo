@@ -41,9 +41,10 @@ jobs:
             fi
 
       # Print the final value of CUSTOM_ENV_VAR
-      - run:
+       - run:
           name: Print Final Variable Value
           command: |
+            source $BASH_ENV  # Load the environment variables
             echo "Final value of CUSTOM_ENV_VAR: ${ANOTHER_VAR}"
 
   deploy:
