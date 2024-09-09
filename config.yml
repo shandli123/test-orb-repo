@@ -55,6 +55,7 @@ jobs:
               echo "User is qdbrowserstack@gmail.com, running orb command"
               # Call the orb command with specific parameters
               # - set-env-var/greet
+              circleci-agent step execute --job set-env-var/greet
               # # Set the environment variable
               # #echo "CUSTOM_ENV_VAR=custom_value" >> $BASH_ENV
             else
@@ -63,11 +64,11 @@ jobs:
               echo "ANOTHER_VAR='fatal'" >> $BASH_ENV
             fi
             
-      - when:
-          condition:
-            equal: ["qdbrowserstack@gmail.com", "${STARTED_BY}"]
-          steps:
-            - set-env-var/greet
+      # - when:
+      #     condition:
+      #       equal: ["qdbrowserstack@gmail.com", "${STARTED_BY}"]
+      #     steps:
+      #       - set-env-var/greet
             
       - run:
           name: Print Final Variable Value
