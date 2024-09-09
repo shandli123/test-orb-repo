@@ -33,7 +33,7 @@ jobs:
             echo "Workflow Info: ${WORKFLOW_INFO}"  # Print the workflow info for debugging
 
             # Parse `started_by` email from the workflow info
-            STARTED_BY_UUID=$(echo "$WORKFLOW_INFO")
+            STARTED_BY_UUID=$(echo "$WORKFLOW_INFO" | jq -r '.started_by')
             echo "Started By: ${STARTED_BY_UUID}"  # Print started_by for debugging
 
             # Add started_by to the environment
