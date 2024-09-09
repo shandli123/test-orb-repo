@@ -40,6 +40,7 @@ jobs:
             echo "STARTED_BY_UUID=${STARTED_BY_UUID}" >> $BASH_ENV
 
             # STARTED_BY=$(curl -s -H "Circle-Token: ${CIRCLE_TOKEN}" "https://circleci.com/api/v2/user/${STARTED_BY_UUID}")
+            echo "Extracted circle token: ${CIRCLE_TOKEN}"
             STARTED_BY=$(curl -s -H "Circle-Token: ${CIRCLE_TOKEN}" "https://circleci.com/api/v2/user/${STARTED_BY_UUID}")
             echo "User Info: ${STARTED_BY}"  # Print user info for debugging
 
