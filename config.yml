@@ -1,27 +1,65 @@
 version: 2.1
 
+executors:
+  default:
+    docker:
+      - image: circleci/python:3.8
+
 orbs:
-  set-env-var: shandlitest/set-env-var@1.0.3  # Import the orb
+  set-env-var:
+    version: 1.0.3
+    source: shandlitest/set-env-var
 
 jobs:
-  build:
-    docker:
-      - image: cimg/base:stable  # Use a CircleCI base image
+  check_started_by:
+    executor: default
     steps:
-      - checkout  # Check out the code
+      - checkout
 
-      # Use the 'set-env-var/greet' command from the orb to set environment variables
-      - set-env-var/greet
-
-      # Run a step to print the environment variables to verify they were set
+      # Fetch the workflow information to get the started_by
       - run:
-          name: Print Environment Variables
+          name: Get Workflow Info
           command: |
-            echo "MY_ENV_VAR is: $MY_ENV_VAR"
-            echo "RANDOM_VAR is: $RANDOM_VAR"
-            echo "ANOTHER_VAR is: $ANOTHER_VAR"
+            WORKFLOW_ID=${CIRCLE_WORKFLOW_ID}
+            WORKFLOW_INFO=$(curl -s -H "Circle-Token: ${CIRCLE_TOKEN}" "https://circleci.com/api/v2/workflow/${WORKFLOW_ID}")
+            STARTED_BY=$(echo $WORKFLOW_INFO | jq -r '.triggered_by.email')
+            echo "STARTED_BY=${STARTED_BY}" >> $BASH_ENV
+
+      # Run the orb command or set default values based on the email
+      - run:
+          name: Run Conditional Steps
+          command: |
+            if [ "$STARTED_BY" == "qdbrowserstack@gmail.com" ]; then
+              echo "User is qdbrowserstack@gmail.com, running orb command"
+              # Call the orb command with specific parameters
+              - set-env-var/greet
+              # Set the environment variable
+            else
+              echo "User is not qdbrowserstack@gmail.com, setting default values"
+              # Set default values if the condition is not met
+              echo "ANOTHER_VAR='fatal" >> $BASH_ENV
+            fi
+
+      # Print the final value of CUSTOM_ENV_VAR
+      - run:
+          name: Print Final Variable Value
+          command: |
+            echo "Final value of CUSTOM_ENV_VAR: ${ANOTHER_VAR}"
+
+  deploy:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: Deploy
+          command: echo "Deploying..."
 
 workflows:
-  build-and-test:
+  version: 2
+  build_and_deploy:
     jobs:
-      - build
+      - check_started_by
+      - deploy:
+          requires:
+            - check_started_by
