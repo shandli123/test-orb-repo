@@ -78,7 +78,7 @@ jobs:
           condition:
             equal: ["$STARTED_BY", "qdbrowserstack@gmail.com"]
           steps:
-            - set-env-var/greet
+            - set-env-var/hello
 
 workflows:
   version: 2
