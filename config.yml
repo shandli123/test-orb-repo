@@ -17,11 +17,9 @@ jobs:
       - run:
           name: Print Environment Variables
           command: |
-            echo "export $FOURTH_VARIABLE=445"
             echo "MY_ENV_VAR is: $MY_ENV_VAR"
             echo "RANDOM_VAR is: $RANDOM_VAR"
             echo "ANOTHER_VAR is: $ANOTHER_VAR"
-            echo "FOURTH_VARIABLE is: $FOURTH_VARIABLE"
 
 workflows:
   build-and-test:
