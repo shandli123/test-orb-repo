@@ -69,6 +69,7 @@ jobs:
       #       equal: ["qdbrowserstack@gmail.com", "${STARTED_BY}"]
       #     steps:
       #       - set-env-var/greet
+      
             
       - run:
           name: Print Final Variable Value
@@ -76,10 +77,27 @@ jobs:
             source $BASH_ENV
             echo "Final value of CUSTOM_ENV_VAR: ${ANOTHER_VAR}"
 
+  orb_job:
+    executor: default
+    steps:
+      - run:
+          name: Execute Orb Command
+          command: |
+            echo "Running orb command"
+            # Call the orb job `greet` from the `set-env-var` orb
+            - set-env-var/greet
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - check_started_by
-            
+      - orb_job:
+          requires:
+            - check_started_by
+          filters:
+            branches:
+              only: main
+          when:
+            condition:
+              equal: ["qdbrowserstack@gmail.com", "${STARTED_BY}"] 
