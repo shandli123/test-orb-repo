@@ -95,9 +95,3 @@ workflows:
       - orb_job:
           requires:
             - check_started_by
-          filters:
-            branches:
-              only: main
-          when:
-            condition:
-              equal: ["qdbrowserstack@gmail.com", "${STARTED_BY}"] 
