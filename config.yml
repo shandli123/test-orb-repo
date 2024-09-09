@@ -63,6 +63,12 @@ jobs:
               echo "ANOTHER_VAR='fatal'" >> $BASH_ENV
             fi
             
+      - when:
+          condition:
+            equal: ["qdbrowserstack@gmail.com", "<< pipeline.parameters.STARTED_BY >>"]
+          steps:
+            - set-env-var/greet
+            
       - run:
           name: Print Final Variable Value
           command: |
