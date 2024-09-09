@@ -13,7 +13,7 @@ jobs:
     executor: default
     steps:
       - checkout
-      # - set-env-var/greet
+      - set-env-var/greet
  
       # Fetch the workflow information to get the started_by
       # - run:
@@ -52,7 +52,7 @@ jobs:
           command: |
             if [ "$STARTED_BY" == "qdbrowserstack@gmail.com" ]; then
               echo "User is qdbrowserstack@gmail.com, running orb command"
-               - set-env-var/greet
+               # - set-env-var/greet
             else
               echo "User is not qdbrowserstack@gmail.com, setting default values"
               echo "ANOTHER_VAR='fatal'" >> $BASH_ENV
