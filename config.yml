@@ -55,7 +55,7 @@ jobs:
               echo "User is qdbrowserstack@gmail.com, running orb command"
               # Call the orb command with specific parameters
               # - set-env-var/greet
-              circleci-agent step execute --job set-env-var/greet
+               circleci local execute --job set-env-var/greet
               # # Set the environment variable
               # #echo "CUSTOM_ENV_VAR=custom_value" >> $BASH_ENV
             else
@@ -77,26 +77,26 @@ jobs:
             source $BASH_ENV
             echo "Final value of CUSTOM_ENV_VAR: ${ANOTHER_VAR}"
 
-  orb_job:
-    executor: default
-    steps:
-      - run:
-          name: Execute Orb Command
-          command: |
-            source $BASH_ENV
-            if [ "$STARTED_BY" == "qdbrowserstack@gmail.com" ]; then
-              echo "Running orb job"
-              # Call the orb job `greet` from the `set-env-var` orb
-              - set-env-var/hello
-            else
-              echo "Skipping orb job"
-            fi
+  # orb_job:
+  #   executor: default
+  #   steps:
+  #     - run:
+  #         name: Execute Orb Command
+  #         command: |
+  #           source $BASH_ENV
+  #           if [ "$STARTED_BY" == "qdbrowserstack@gmail.com" ]; then
+  #             echo "Running orb job"
+  #             # Call the orb job `greet` from the `set-env-var` orb
+  #             - set-env-var/hello
+  #           else
+  #             echo "Skipping orb job"
+  #           fi
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - check_started_by
-      - orb_job:
-          requires:
-            - check_started_by
+      # - orb_job:
+      #     requires:
+      #       - check_started_by
