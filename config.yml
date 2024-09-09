@@ -55,7 +55,7 @@ jobs:
               echo "User is qdbrowserstack@gmail.com, running orb command"
               # Call the orb command with specific parameters
               # - set-env-var/greet
-               circleci local execute --job set-env-var/greet
+               circleci execute --job set-env-var/hello
               # # Set the environment variable
               # #echo "CUSTOM_ENV_VAR=custom_value" >> $BASH_ENV
             else
