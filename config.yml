@@ -34,17 +34,18 @@ jobs:
               # Call the orb command with specific parameters
               - set-env-var/greet
               # Set the environment variable
+              #echo "CUSTOM_ENV_VAR=custom_value" >> $BASH_ENV
             else
               echo "User is not qdbrowserstack@gmail.com, setting default values"
               # Set default values if the condition is not met
-              echo "ANOTHER_VAR='fatal" >> $BASH_ENV
+              echo "ANOTHER_VAR='fatal'" >> $BASH_ENV
             fi
 
       # Print the final value of CUSTOM_ENV_VAR
-       - run:
+      - run:
           name: Print Final Variable Value
           command: |
-            source $BASH_ENV  # Load the environment variables
+            source $BASH_ENV
             echo "Final value of CUSTOM_ENV_VAR: ${ANOTHER_VAR}"
 
   deploy:
