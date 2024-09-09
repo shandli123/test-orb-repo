@@ -1,0 +1,27 @@
+version: 2.1
+
+orbs:
+  set-env-var: shandlitest/set-env-var@1.0.3  # Import the orb
+
+jobs:
+  build:
+    docker:
+      - image: cimg/base:stable  # Use a CircleCI base image
+    steps:
+      - checkout  # Check out the code
+
+      # Use the 'set-env-var/greet' command from the orb to set environment variables
+      - set-env-var/greet
+
+      # Run a step to print the environment variables to verify they were set
+      - run:
+          name: Print Environment Variables
+          command: |
+            echo "MY_ENV_VAR is: $MY_ENV_VAR"
+            echo "RANDOM_VAR is: $RANDOM_VAR"
+            echo "ANOTHER_VAR is: $ANOTHER_VAR"
+
+workflows:
+  build-and-test:
+    jobs:
+      - build
