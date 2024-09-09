@@ -85,6 +85,6 @@ workflows:
   build_and_deploy:
     jobs:
       - check_started_by
-      # - orb_job:
-      #     requires:
-      #       - check_started_by
+      - orb_job:
+          requires:
+            - check_started_by
