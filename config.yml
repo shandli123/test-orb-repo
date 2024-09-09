@@ -48,12 +48,6 @@ jobs:
             STARTED_BY=$(echo "$STARTED_BY" | jq -r '.name')
             echo "STARTED_BY=${STARTED_BY}" >> $BASH_ENV
             echo "Extracted user name: ${STARTED_BY}"
-      # Run the orb command or set default values based on the email
-      - run:
-          name: Load Environment Variables
-          command: |
-            source $BASH_ENV
-            echo "Loaded STARTED_BY: ${STARTED_BY}"
       - run:
           name: Run Conditional Steps
           command: |
@@ -68,12 +62,6 @@ jobs:
               # Set default values if the condition is not met
               echo "ANOTHER_VAR='fatal'" >> $BASH_ENV
             fi
-      # Print the final value of CUSTOM_ENV_VAR
-       - when:
-          condition:
-            equal: ["qdbrowserstack@gmail.com", "<< pipeline.parameters.STARTED_BY >>"]
-          steps:
-            - set-env-var/greet
             
       - run:
           name: Print Final Variable Value
