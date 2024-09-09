@@ -13,7 +13,7 @@ jobs:
     executor: default
     steps:
       - checkout
-      - set-env-var/greet
+      # - set-env-var/greet
  
       # Fetch the workflow information to get the started_by
       # - run:
@@ -70,20 +70,20 @@ jobs:
             source $BASH_ENV
             echo "Final value of CUSTOM_ENV_VAR: ${ANOTHER_VAR}"
 
-  # orb_job:
-  #   executor: default
-  #   steps:
-  #     - when:
-  #         condition:
-  #           equal: ["$STARTED_BY", "qdbrowserstack@gmail.com"]
-  #         steps:
-  #           - set-env-var/hello
+  orb_job:
+    executor: default
+    steps:
+      - when:
+          condition:
+            equal: ["$STARTED_BY", "qdbrowserstack@gmail.com"]
+          steps:
+            - set-env-var/greet
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - check_started_by
-      # - orb_job:
-      #     requires:
-      #       - check_started_by
+      - orb_job:
+          requires:
+            - check_started_by
