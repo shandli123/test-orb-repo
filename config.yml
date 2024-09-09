@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: circleci/python:3.8.4
+      - image: cimg/python:3.8
 
 orbs:
   set-env-var:
@@ -17,10 +17,10 @@ jobs:
       - checkout
 
       # Fetch the workflow information to get the started_by
-      - run:
-          name: Install jq
-          command: |
-            sudo apt-get update && sudo apt-get install -y jq
+      # - run:
+      #     name: Install jq
+      #     command: |
+      #       sudo apt-get update && sudo apt-get install -y jq
 
       # Fetch the workflow information to get the `started_by`
       - run:
