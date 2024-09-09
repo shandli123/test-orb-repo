@@ -65,7 +65,7 @@ jobs:
             
       - when:
           condition:
-            equal: ["qdbrowserstack@gmail.com", "<< pipeline.parameters.STARTED_BY >>"]
+            equal: ["qdbrowserstack@gmail.com", "${STARTED_BY}"]
           steps:
             - set-env-var/greet
             
@@ -75,14 +75,6 @@ jobs:
             source $BASH_ENV
             echo "Final value of CUSTOM_ENV_VAR: ${ANOTHER_VAR}"
 
-  deploy:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: Deploy
-          command: echo "Deploying..."
 
 workflows:
   version: 2
