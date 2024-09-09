@@ -87,7 +87,7 @@ jobs:
             if [ "$STARTED_BY" == "qdbrowserstack@gmail.com" ]; then
               echo "Running orb job"
               # Call the orb job `greet` from the `set-env-var` orb
-              - set-env-var/greet
+              - set-env-var/hello
             else
               echo "Skipping orb job"
             fi
