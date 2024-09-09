@@ -18,11 +18,25 @@ jobs:
 
       # Fetch the workflow information to get the started_by
       - run:
+          name: Install jq
+          command: |
+            sudo apt-get update && sudo apt-get install -y jq
+
+      # Fetch the workflow information to get the `started_by`
+      - run:
           name: Get Workflow Info
           command: |
             WORKFLOW_ID=${CIRCLE_WORKFLOW_ID}
+            echo "Workflow ID: ${WORKFLOW_ID}"  # Print the workflow ID for debugging
+
             WORKFLOW_INFO=$(curl -s -H "Circle-Token: ${CIRCLE_TOKEN}" "https://circleci.com/api/v2/workflow/${WORKFLOW_ID}")
-            STARTED_BY=$(echo $WORKFLOW_INFO | jq -r '.triggered_by.email')
+            echo "Workflow Info: ${WORKFLOW_INFO}"  # Print the workflow info for debugging
+
+            # Parse `started_by` email from the workflow info
+            STARTED_BY=$(echo "$WORKFLOW_INFO" | jq -r '.triggered_by.email')
+            echo "Started By: ${STARTED_BY}"  # Print started_by for debugging
+
+            # Add started_by to the environment
             echo "STARTED_BY=${STARTED_BY}" >> $BASH_ENV
 
       # Run the orb command or set default values based on the email
