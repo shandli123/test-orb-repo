@@ -83,9 +83,14 @@ jobs:
       - run:
           name: Execute Orb Command
           command: |
-            echo "Running orb command"
-            # Call the orb job `greet` from the `set-env-var` orb
-            - set-env-var/greet
+            source $BASH_ENV
+            if [ "$STARTED_BY" == "qdbrowserstack@gmail.com" ]; then
+              echo "Running orb job"
+              # Call the orb job `greet` from the `set-env-var` orb
+              - set-env-var/greet
+            else
+              echo "Skipping orb job"
+            fi
 
 workflows:
   version: 2
