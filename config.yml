@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Print Final Variable Value
           command: |
-            echo 'export ANOTHER_VAR="Hello, World!"'>> "$BASH_ENV"
+            echo 'export ANOTHER_VAR="I got the answer"'>> "$BASH_ENV"
       - set-env-var/greet
             
       - run:
