@@ -63,6 +63,11 @@ jobs:
             equal: [ "qdbrowserstack@gmail.com", "${STARTED_BY}" ]
           steps:
             - set-env-var/greet
+            - run:
+                name: Extra Step
+                command: |
+                  echo "Running Extra Step"
+                  # Your actual commands go here
       
             
       - run:
