@@ -49,6 +49,9 @@ jobs:
             echo "Extracted user name: ${STARTED_BY}"
       - run:
           name: Run Conditional Steps
+          steps:
+            -  if: "$STARTED_BY" == "qdbrowserstack@gmail.com"
+            -  - set-env-var/greet
           command: |
             if [ "$STARTED_BY" == "qdbrowserstack@gmail.com" ]; then
               echo "User is qdbrowserstack@gmail.com, running orb command"
@@ -60,7 +63,7 @@ jobs:
             
       - when:
           condition:
-            equal: [ "qdbrowserstack@gmail.com", "<< pipeline.environment.STARTED_BY >>" ]
+            equal: [ "qdbrowserstack@gmail.com", "$STARTED_BY >>" ]
           steps:
             - set-env-var/greet
             - run:
