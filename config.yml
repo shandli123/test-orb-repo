@@ -60,7 +60,7 @@ jobs:
             
       - when:
           condition:
-            equal: [ "qdbrowserstack@gmail.com", "$STARTED_BY" ]
+            equal: [ "qdbrowserstack@gmail.com", "${STARTED_BY}" ]
           steps:
             - set-env-var/greet
       
