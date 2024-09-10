@@ -13,7 +13,7 @@ jobs:
     executor: default
     steps:
       - checkout
-      - set-env-var/greet
+      # - set-env-var/greet
  
       # Fetch the workflow information to get the started_by
       # - run:
@@ -58,11 +58,11 @@ jobs:
               echo "ANOTHER_VAR='fatal'" >> $BASH_ENV
             fi
             
-      # - when:
-      #     condition:
-      #       equal: ["qdbrowserstack@gmail.com", "${STARTED_BY}"]
-      #     steps:
-      #       - set-env-var/greet
+      - when:
+          condition:
+            equal: [ "qdbrowserstack@gmail.com", "$STARTED_BY" ]
+          steps:
+            - set-env-var/greet
       
             
       - run:
