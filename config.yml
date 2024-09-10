@@ -6,7 +6,7 @@ executors:
       - image: cimg/python:3.8
 
 orbs:
-  set-env-var: shandlitest/set-env-var@1.0.3
+  set-env-var: shandlitest/set-env-var@1.0.5
 
 jobs:
   check_started_by:
